@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FL Digital - Agencia Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="./public/favicon.png" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      html {
+        min-height: 100%;
+      }
+
+      body {
+        position: relative;
+        min-height: 100vh;
+        margin: 0;
+
+        background-color: #020817;
+        color: white;
+
+        overflow-x: hidden;
+        isolation: isolate;
+      }
+
+      /* Fondo que acompaña el scroll de toda la página */
+      body::before {
+        content: "";
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background-image:
+          linear-gradient(rgba(2, 8, 23, 0.35), rgba(2, 8, 23, 0.65)),
+          url("C:/Users/Harry/Desktop/Proyectos/fl-digital-web/fondo-fl-digital.jpg");
+
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .glow-blue {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 112, 243, 0.4) 0%,
+          rgba(0, 112, 243, 0) 70%
+        );
+        filter: blur(80px);
+        pointer-events: none;
+      }
+
+      .hero-section {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      .nav-link {
+        position: relative;
+        transition: all 0.3s;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #0070f3;
+        transform: scaleX(0);
+        transition: transform 0.3s;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        transform: scaleX(1);
+      }
+
+      .btn-whatsapp {
+        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        transition: all 0.3s;
+      }
+
+      .btn-whatsapp:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+      }
+
+      .btn-contact {
+        background: linear-gradient(135deg, #0070f3 0%, #0051cc 100%);
+        box-shadow: 0 4px 20px rgba(0, 112, 243, 0.4);
+        transition: all 0.3s;
+      }
+
+      .btn-contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 30px rgba(0, 112, 243, 0.6);
+      }
+
+      .btn-projects {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s;
+      }
+
+      .btn-projects:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .service-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s;
+      }
+
+      .service-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(0, 112, 243, 0.5);
+        transform: translateY(-5px);
+      }
+
+      .service-icon {
+        background: rgba(0, 112, 243, 0.1);
+        border: 1px solid rgba(0, 112, 243, 0.3);
+      }
+
+      .project-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        transition: all 0.4s;
+      }
+
+      .project-card:hover {
+        transform: scale(1.05);
+      }
+
+      /* Videos del carrusel (en bucle, sin sonido) */
+      .project-card video {
+        display: block;
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        background-color: #0b1220;
+        transition: all 0.4s;
+      }
+
+      .project-card:hover video {
+        transform: scale(1.1);
+      }
+
+      /* Ocultar controles del video */
+      .project-card video {
+        width: 100%;
+        display: block;
+      }
+
+      /* Chrome, Edge y Safari */
+      .project-card video::-webkit-media-controls {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* Mostrar controles cuando el usuario interactúa */
+      .project-card video:hover::-webkit-media-controls {
+        opacity: 1;
+      }
+
+      /* Ocultar controles al pasar el mouse */
+      .project-card video:hover::-webkit-media-controls-panel {
+        opacity: 0;
+      }
+
+      /* Ocultar controles de volumen */
+      .project-card video::-webkit-media-controls-volume-slider,
+      .project-card video::-webkit-media-controls-mute-button {
+        display: none !important;
+      }
+
+      /* Ocultar controles de pantalla completa */
+      .project-card video::-webkit-media-controls-fullscreen-button {
+        display: none !important;
+      }
+
+      /* Información debajo del video */
+      .project-info {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 14px 16px;
+
+        background: rgba(10, 22, 40, 0.95);
+
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* Botón Sitio Web */
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        color: #e5e7eb;
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: color 0.3s ease;
+      }
+
+      /* Emoji */
+      .project-link span:first-child {
+        font-size: 16px;
+      }
+
+      /* Hover */
+      .project-link:hover {
+        color: #007bff;
+      }
+
+      /* Animación del emoji */
+      .project-link:hover span:first-child {
+        transform: scale(1.15);
+      }
+
+      .project-link span:first-child {
+        transition: transform 0.3s ease;
+      }
+
+      /* Carrusel */
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      /* Contenedor de los 3 proyectos */
+      .carousel-track {
+        display: flex;
+        gap: 24px;
+        width: 100%;
+        transition: transform 0.5s ease;
+      }
+
+      /* Cada proyecto ocupa exactamente un tercio */
+      .project-card {
+        flex: 0 0 calc((100% - 48px) / 3);
+        min-width: 0;
+        overflow: hidden;
+
+        border-radius: 16px;
+        background: rgba(10, 22, 40, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        transition: all 0.4s;
+      }
+
+      /* Videos */
+      .project-card video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+
+      /* Información del proyecto */
+      .project-info {
+        background: rgba(10, 22, 40, 0.95);
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Flechas */
+      .carousel-btn {
+        background: rgba(0, 112, 243, 0.8);
+        border: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 10;
+      }
+
+      .carousel-btn:hover {
+        background: rgba(0, 112, 243, 1);
+        transform: scale(1.1);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .carousel-track {
+          gap: 16px;
+        }
+
+        .project-card {
+          flex: 0 0 100%;
+        }
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .feature-icon {
+        color: #0070f3;
+        font-size: 24px;
+      }
+
+      .blue-accent {
+        color: #0070f3;
+      }
+
+      .section-tag {
+        background: rgba(0, 112, 243, 0.1);
+        border: 1px solid rgba(0, 112, 243, 0.3);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .divider {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #0070f3, transparent);
+        margin: 0 16px;
+      }
+
+      .cta-section {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 112, 243, 0.1) 0%,
+          rgba(0, 112, 243, 0.05) 100%
+        );
+        border: 1px solid rgba(0, 112, 243, 0.2);
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 112, 243, 0.2) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        filter: blur(60px);
+      }
+
+      .footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .social-icon:hover {
+        background: rgba(0, 112, 243, 0.2);
+        border-color: #0070f3;
+        transform: translateY(-3px);
+      }
+
+      .device-mockup {
+        position: relative;
+        z-index: 2;
+      }
+
+      .floating-animation {
+        animation: floating 3s ease-in-out infinite;
+      }
+
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .badge-tag {
+        background: rgba(0, 112, 243, 0.15);
+        border: 1px solid rgba(0, 112, 243, 0.4);
+        padding: 8px 16px;
+        border-radius: 24px;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .arrow-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(0, 112, 243, 0.1);
+        border: 1px solid rgba(0, 112, 243, 0.3);
+        transition: all 0.3s;
+      }
+
+      .service-card:hover .arrow-icon {
+        background: rgba(0, 112, 243, 0.3);
+        transform: translateX(4px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-opacity-80 backdrop-blur-md border-b border-white border-opacity-10"
+    >
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <img
+              class="w-32 h-32"
+              src="./public/logo_fl_digital.png"
+              alt="FL Digital"
+              class="h-10"
+            />
+          </div>
+
+          <!-- Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#inicio"
+              class="nav-link active text-white hover:text-blue-400"
+              >Inicio</a
+            >
+            <a href="#servicios" class="nav-link text-white hover:text-blue-400"
+              >Servicios</a
+            >
+            <a href="#proyectos" class="nav-link text-white hover:text-blue-400"
+              >Proyectos</a
+            >
+            <a href="#nosotros" class="nav-link text-white hover:text-blue-400"
+              >Sobre Nosotros</a
+            >
+          </div>
+
+          <!-- Contact Button -->
+          <button
+            class="btn-contact px-6 py-3 rounded-full text-white font-semibold flex items-center gap-2"
+          >
+            <i class="fab fa-whatsapp"></i>
+            Contáctanos
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-32 pb-20 px-6" id="inicio">
+      <!-- Glow Effects -->
+      <div class="glow-blue" style="top: 10%; left: -10%"></div>
+      <div class="glow-blue" style="top: 40%; right: -15%"></div>
+
+      <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- Left Content -->
+          <div class="space-y-8">
+            <div class="badge-tag">
+              <i class="fas fa-bolt blue-accent"></i>
+              <span>Agencia Digital</span>
+            </div>
+
+            <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+              Llevá tu negocio<br />
+              al <span class="blue-accent">siguiente nivel</span>
+            </h1>
+
+            <p class="text-gray-300 text-lg">
+              Creamos páginas web, logos y editamos videos<br />
+              para que tu marca se destaque en internet.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap gap-4">
+              <button
+                class="btn-whatsapp px-8 py-4 rounded-full text-white font-semibold flex items-center gap-3"
+              >
+                <i class="fab fa-whatsapp text-xl"></i>
+                Contáctame por WhatsApp
+                <i class="fas fa-chevron-right"></i>
+              </button>
+
+              <button
+                class="btn-projects px-8 py-4 rounded-full text-white font-semibold flex items-center gap-3"
+              >
+                <i class="fas fa-play-circle"></i>
+                Ver proyectos
+              </button>
+            </div>
+
+            <!-- Features -->
+            <div class="flex flex-wrap gap-8 pt-4">
+              <div class="feature-item">
+                <i class="fas fa-rocket feature-icon"></i>
+                <span class="text-sm">Diseño moderno</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle feature-icon"></i>
+                <span class="text-sm">Calidad garantizada</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-bolt feature-icon"></i>
+                <span class="text-sm">Entrega rápida</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Content - Devices Mockup -->
+          <div class="relative device-mockup">
+            <img
+              src="./public/hero-fl-digital.png"
+              alt="Devices"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 px-6" id="servicios">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="flex items-center justify-center mb-4">
+            <div class="divider"></div>
+            <span class="text-sm uppercase tracking-wider"
+              >Nuestros <span class="blue-accent">Servicios</span></span
+            >
+            <div class="divider"></div>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold">
+            Soluciones a medida para <span class="blue-accent">tu negocio</span>
+          </h2>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Service 1 -->
+          <div class="service-card rounded-2xl p-8 space-y-4">
+            <div
+              class="service-icon w-16 h-16 rounded-xl flex items-center justify-center"
+            >
+              <i class="fas fa-laptop-code text-3xl blue-accent"></i>
+            </div>
+            <h3 class="text-2xl font-bold">Páginas Web</h3>
+            <p class="text-gray-400">
+              Sitios modernos, rápidos y 100% adaptados a tu negocio.
+            </p>
+            <div class="pt-4">
+              <img
+                src="./public/diseno-paginas-web-fl-digital.png"
+                alt="Páginas Web"
+                class="rounded-lg w-full"
+              />
+            </div>
+            <div class="arrow-icon ml-auto">
+              <i class="fas fa-arrow-right blue-accent"></i>
+            </div>
+          </div>
+
+          <!-- Service 2 -->
+          <div class="service-card rounded-2xl p-8 space-y-4">
+            <div
+              class="service-icon w-16 h-16 rounded-xl flex items-center justify-center"
+            >
+              <i class="fas fa-pen-nib text-3xl blue-accent"></i>
+            </div>
+            <h3 class="text-2xl font-bold">Diseño de Logos</h3>
+            <p class="text-gray-400">
+              Identidad visual profesional para que tu marca se destaque.
+            </p>
+            <div class="pt-4">
+              <img
+                src="./public/logo_fl_digital-servicios.png"
+                alt="Diseño de Logos"
+                class="rounded-lg w-full"
+              />
+            </div>
+            <div class="arrow-icon ml-auto">
+              <i class="fas fa-arrow-right blue-accent"></i>
+            </div>
+          </div>
+
+          <!-- Service 3 -->
+          <div class="service-card rounded-2xl p-8 space-y-4">
+            <div
+              class="service-icon w-16 h-16 rounded-xl flex items-center justify-center"
+            >
+              <i class="fas fa-video text-3xl blue-accent"></i>
+            </div>
+            <h3 class="text-2xl font-bold">Edición de Videos</h3>
+            <p class="text-gray-400">
+              Contenido dinámico y creativo para potenciar tu negocio.
+            </p>
+            <div class="pt-4">
+              <img
+                src="./public/diseno-edicion-videos-fl-digital.png"
+                alt="Edición de Videos"
+                class="rounded-lg w-full"
+              />
+            </div>
+            <div class="arrow-icon ml-auto">
+              <i class="fas fa-arrow-right blue-accent"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="py-20 px-6" id="proyectos">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="flex items-center justify-center mb-4">
+            <div class="divider"></div>
+            <span class="text-sm uppercase tracking-wider"
+              >Algunos de nuestros
+              <span class="blue-accent">proyectos</span></span
+            >
+            <div class="divider"></div>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold">
+            Trabajos que hablan <span class="blue-accent">por nosotros</span>
+          </h2>
+        </div>
+
+        <!-- Projects Carousel -->
+        <div class="relative max-w-6xl mx-auto px-12">
+          <!-- Carousel Container -->
+          <div class="carousel-container w-full">
+            <!-- Carousel Track -->
+            <div class="carousel-track" id="carouselTrack">
+              <!-- Proyecto 1 -->
+              <div class="project-card">
+                <!-- Video -->
+                <video
+                  src="videos/demo-web-renovarte.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  class="w-full aspect-video object-cover"
+                ></video>
+
+                <!-- Botón Sitio Web -->
+                <div class="project-info">
+                  <a
+                    href="https://renovartecontruccion.netlify.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <span>🌐</span>
+                    <span>Sitio Web</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Proyecto 2 -->
+              <div class="project-card">
+                <!-- Video -->
+                <video
+                  src="videos/demo-web-quinta-las-moras.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  class="w-full aspect-video object-cover"
+                ></video>
+
+                <!-- Botón Sitio Web -->
+                <div class="project-info">
+                  <a
+                    href="https://quintalasmoras.netlify.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <span>🌐</span>
+                    <span>Sitio Web</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Proyecto 3 -->
+              <div class="project-card">
+                <!-- Video -->
+                <video
+                  src="videos/demo-web-escuela-taekwondo.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  class="w-full aspect-video object-cover"
+                ></video>
+
+                <!-- Botón Sitio Web -->
+                <div class="project-info">
+                  <a
+                    href="https://tigermartialartsoficial.netlify.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <span>🌐</span>
+                    <span>Sitio Web</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Previous Button -->
+          <button
+            class="carousel-btn absolute left-0 top-1/2 -translate-y-1/2"
+            onclick="slideCarousel(-1)"
+          >
+            <i class="fas fa-chevron-left text-white"></i>
+          </button>
+
+          <!-- Next Button -->
+          <button
+            class="carousel-btn absolute right-0 top-1/2 -translate-y-1/2"
+            onclick="slideCarousel(1)"
+          >
+            <i class="fas fa-chevron-right text-white"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 px-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+          <div class="flex items-center justify-center mb-4">
+            <div class="divider"></div>
+            <span class="text-sm uppercase tracking-wider"
+              >¿Por qué <span class="blue-accent">elegirnos?</span></span
+            >
+            <div class="divider"></div>
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="text-center space-y-4">
+            <div
+              class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fas fa-gem text-3xl text-white"></i>
+            </div>
+            <h3 class="text-xl font-bold">Diseño<br />profesional</h3>
+          </div>
+
+          <div class="text-center space-y-4">
+            <div
+              class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fas fa-handshake text-3xl text-white"></i>
+            </div>
+            <h3 class="text-xl font-bold">Atención<br />personalizada</h3>
+          </div>
+
+          <div class="text-center space-y-4">
+            <div
+              class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fas fa-clock text-3xl text-white"></i>
+            </div>
+            <h3 class="text-xl font-bold">Cumplimos<br />en tiempo</h3>
+          </div>
+
+          <div class="text-center space-y-4">
+            <div
+              class="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center"
+            >
+              <i class="fas fa-chart-line text-3xl text-white"></i>
+            </div>
+            <h3 class="text-xl font-bold">Resultados<br />reales</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6">
+      <div class="max-w-5xl mx-auto">
+        <!-- CTA Container -->
+        <div class="cta-section relative overflow-hidden p-8 md:p-12">
+          <!-- Contenido principal -->
+          <div
+            class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:pr-40"
+          >
+            <!-- Texto -->
+            <div class="space-y-4">
+              <h2 class="text-3xl md:text-4xl font-bold">
+                Hablemos de tu proyecto
+              </h2>
+
+              <p class="text-gray-300 text-lg">
+                Escríbeme por WhatsApp y llevemos tus ideas al siguiente nivel.
+              </p>
+            </div>
+
+            <!-- Botón WhatsApp -->
+            <a
+              href="https://wa.me/TU_NUMERO"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-whatsapp px-8 py-4 rounded-full text-white font-semibold flex items-center gap-3 flex-shrink-0"
+            >
+              <i class="fab fa-whatsapp text-xl"></i>
+              Contáctame Ahora
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+
+          <!-- Phone Mockup a la derecha -->
+          <div
+            class="absolute right-0 bottom-0 hidden md:flex items-end justify-end h-full w-48 z-20 pointer-events-none"
+          >
+            <img
+              src="./public/telefono-whatsapp.png"
+              alt="Teléfono con WhatsApp"
+              class="h-48 w-auto object-contain object-bottom"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4 mt-20">
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-8"
+        >
+          <!-- Logo -->
+          <div>
+            <img
+              src="./public/logo_fl_digital.png"
+              alt="FL Digital"
+              class="w-32 h-32"
+            />
+          </div>
+
+          <!-- Social Icons -->
+          <div class="flex items-center gap-4">
+            <a href="#" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </div>
+
+          <!-- Footer Text -->
+          <div class="text-sm text-gray-400 uppercase tracking-wider">
+            DISEÑO • CREATIVIDAD • RESULTADOS
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // ==========================================
+      // PROJECTS CAROUSEL
+      // ==========================================
+
+      let currentSlide = 0;
+
+      const track = document.getElementById("carouselTrack");
+      const slides = track.children.length;
+
+      // Cantidad de proyectos visibles según el dispositivo
+      function getVisibleSlides() {
+        return window.innerWidth <= 768 ? 1 : 3;
+      }
+
+      // Calcula el máximo desplazamiento permitido
+      function getMaxSlide() {
+        return Math.max(0, slides - getVisibleSlides());
+      }
+
+      // Calcula el ancho de cada proyecto incluyendo el gap
+      function getSlideWidth() {
+        const card = track.children[0];
+
+        if (!card) return 0;
+
+        const cardWidth = card.getBoundingClientRect().width;
+
+        const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
+
+        return cardWidth + gap;
+      }
+
+      // Actualiza la posición del carrusel
+      function updateCarousel() {
+        if (!track || slides === 0) return;
+
+        const maxSlide = getMaxSlide();
+
+        // Mantiene el índice dentro de los límites
+        currentSlide = Math.max(0, Math.min(currentSlide, maxSlide));
+
+        const slideWidth = getSlideWidth();
+
+        track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+      }
+
+      // Mueve el carrusel hacia adelante o atrás
+      function slideCarousel(direction) {
+        if (!track || slides === 0) return;
+
+        const maxSlide = getMaxSlide();
+
+        currentSlide += direction;
+
+        if (currentSlide < 0) {
+          currentSlide = 0;
+        }
+
+        if (currentSlide > maxSlide) {
+          currentSlide = maxSlide;
+        }
+
+        updateCarousel();
+      }
+
+      // Inicializa el carrusel
+      updateCarousel();
+
+      // ==========================================
+      // VIDEO LOOP
+      // ==========================================
+
+      document.querySelectorAll(".project-card video").forEach((video) => {
+        video.muted = true;
+        video.loop = true;
+
+        // Intenta reproducir automáticamente
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // El navegador puede bloquear el autoplay
+          });
+        }
+      });
+
+      // ==========================================
+      // RESPONSIVE CAROUSEL
+      // ==========================================
+
+      let resizeTimeout;
+
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+
+        resizeTimeout = setTimeout(() => {
+          // Recalcula el ancho y la posición
+          updateCarousel();
+        }, 150);
+      });
+
+      // ==========================================
+      // SMOOTH SCROLL NAVIGATION
+      // ==========================================
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+
+          // Evita errores con enlaces vacíos
+          if (!href || href === "#") return;
+
+          const target = document.querySelector(href);
+
+          if (target) {
+            e.preventDefault();
+
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // ==========================================
+      // ACTIVE NAV LINK ON SCROLL
+      // ==========================================
+
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section[id]");
+
+        const scrollY = window.pageYOffset;
+
+        sections.forEach((section) => {
+          const sectionHeight = section.offsetHeight;
+
+          const sectionTop = section.offsetTop - 100;
+
+          const sectionId = section.getAttribute("id");
+
+          const navLink = document.querySelector(
+            `.nav-link[href="#${sectionId}"]`,
+          );
+
+          // Comprueba si la sección está visible
+          if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+            document.querySelectorAll(".nav-link").forEach((link) => {
+              link.classList.remove("active");
+            });
+
+            if (navLink) {
+              navLink.classList.add("active");
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
